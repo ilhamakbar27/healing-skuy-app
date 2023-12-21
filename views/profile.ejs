@@ -21,12 +21,12 @@
         <!-- Learn More: https://formbold.com -->
         <div class="mx-auto w-full  max-w-[550px] bg-white">
                         <h1 class="text-transparent font-semibold mb-10  bg-[#3887BE] bg-clip-text text-5xl ">Edit your profile here !</h1>
-         <form action="/profile/:id" method="post">
+         <form action="/profile/<%=id%>" method="post">
                 <div class="mb-5">
                     <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
                         Full Name
                     </label>
-                    <input type="text" name="name" id="name" placeholder="Full Name"
+                    <input type="text" name="name" placeholder="Full Name"
                     value="<%= profiles.name%>"
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                         
@@ -35,14 +35,14 @@
                     <label for="message" class="mb-3 block text-base font-medium text-[#07074D]">
                       Gender
                     </label>
-                    <input value="<%= profiles.gender %>" type="text" name="name" id="name" placeholder="Gender"
+                    <input value="<%= profiles.gender %>" type="text" name="gender" placeholder="Gender"
                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
                 <div class="mb-5">
                     <label for="message" class="mb-3 block text-base font-medium text-[#07074D]">
                       Age
                     </label>
-                    <input type="number" name="name" id="name" placeholder="Age"
+                    <input type="number" name="age" placeholder="Age"
                     value="<%= profiles.age %>"
                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
@@ -50,7 +50,7 @@
                     <label for="profilePicture" class="mb-3 block text-base font-medium text-[#07074D]">
                       Profile Picture
                     </label>
-                    <input type="text" name="name" id="name" placeholder="Profile Picture" value="<%=profiles.profilePicture %>"
+                    <input type="text" name="profilePicture" placeholder="Profile Picture" value="<%=profiles.profilePicture %>"
                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
                 <div>

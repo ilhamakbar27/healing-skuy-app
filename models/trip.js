@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Trip.belongsTo(models.User)
+      Trip.belongsToMany(models.Destination,{
+        through: models.TripDestination,
+        foreignKey: "TripId"
+      })
       // define association here
     }
   }

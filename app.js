@@ -42,6 +42,7 @@ app.post("/register",Controller.handleRegister )
 app.get("/trips",isAuthenticated, Controller.showTrips)
 app.get("/admin",isAdmin, Controller.showAdmin)
 app.get("/profile/:id", Controller.showProfile)
+app.post("/profile/:id", Controller.handleProfile)
 
 
 app.listen(port, () => {

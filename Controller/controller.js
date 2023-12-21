@@ -1,8 +1,9 @@
 // const {User} = require("../models")
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
-const { User, Trip ,Profile} = require("../models");
+const { User, Trip ,Profile,Destination,TripDestination} = require("../models");
 
+// const destination = require("../models/destination");
 class Controller {
   static async showLogin(req, res) {
     try {
@@ -66,7 +67,7 @@ class Controller {
         const profiles = await Profile.findOne({
             where : {UserId : id}
         })
-        console.log(profiles);
+        // console.log(profiles);
       res.render("home", { username, profiles ,id});
     } catch (error) {
       res.send(error);
@@ -80,7 +81,7 @@ class Controller {
         const profiles = await Profile.findOne({
             where : {UserId : id}
         })
-        console.log(profiles);
+        // console.log(profiles);
       res.render("admin", { username, profiles,id});
     } catch (error) {
       res.send(error);
@@ -97,7 +98,7 @@ class Controller {
   static async handleRegister(req, res) {
     try {
       const { username, password, name, gender, age } = req.body;
-      console.log(req.body);
+    //   console.log(req.body);
       let newUser = await User.create({ username, password });
       await Profile.create({ name, gender, age, UserId: newUser.id });
 
@@ -119,8 +120,15 @@ class Controller {
   static async showTrips(req, res) {
     try {
         // const profiles = await Profile.findAll()
-      const trip = await Trip.findAll();
-      const { username, id } = req.session.user;
+        const { username, id } = req.session.user;
+      const trip = await Trip.findAll({
+        include : Destination
+      });
+       
+      
+
+    //   console.log(destination);
+
       const profiles = await Profile.findOne({
         where : {UserId : id}
     })
@@ -128,6 +136,7 @@ class Controller {
       // console.log(req.session.user);
       res.render("trips", { username, id,profiles, trip });
     } catch (error) {
+        console.log(error);
       res.send(error);
     }
   }
@@ -138,6 +147,7 @@ class Controller {
       const profiles = await Profile.findOne({
         where : {UserId : id}
     })
+    console.log(profiles);
     //   const profiles = await Profile.findAll()
       // //  const {id} = req.session.user
       //     console.log(req.session.user);
@@ -147,16 +157,18 @@ class Controller {
     }
   }
 
-//   static async handleProfile(req, res) {
-//     try {
-//       const { username, id } = req.session.user;
-//      const {name,gender,age,profilePicture} =req.body
-
-//       res.render("profile", { username, id, profiles });
-//     } catch (error) {
-//       res.send(error);
-//     }
-//   }
+  static async handleProfile(req, res) {
+    try {
+    //   const { username, id } = req.session.user;
+        const {name,gender,age,profilePicture} =req.body
+        await Profile.update({name,gender,age,profilePicture})
+        console.log(req.body);
+        res.redirect('/home')
+    //   res.render("profile", { username, id, profiles });
+    } catch (error) {
+      res.send(error);
+    }
+  }
 
   
 }
