@@ -18,26 +18,26 @@
             <h1 class="mb-8 font-bold text-4xl text-center text-gray-800">
               Sign up
             </h1>
-             
-            
-                <%= splittedErrors %>
+            <% splittedErrors?.forEach(el => { %>
+            <p class="text-center font-semibold pb-1 text-red-600"> <%= el %> </p>
+            <% }) %>
 
             <input
-            type="text"
-            class="block border border-gray-300 w-full p-3 rounded mb-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            name="username"
-            placeholder="Username" />
+              type="text"
+              class="block border border-gray-300 w-full p-3 rounded mb-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              name="username"
+              placeholder="Username" />
             <input
               type="text"
               class="block border border-gray-300 w-full p-3 rounded mb-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
               name="name"
               placeholder="Fullname" />
-              <input
+            <input
               type="text"
               class="block border border-gray-300 w-full p-3 rounded mb-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
               name="gender"
               placeholder="Gender" />
-              <input
+            <input
               type="text"
               class="block border border-gray-300 w-full p-3 rounded mb-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
               name="age"
