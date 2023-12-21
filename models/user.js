@@ -1,7 +1,8 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
+// const bcrypt = require('bcryptjs');
+const hashing = require("../helpers/bcrypt");
+// hashing
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -10,19 +11,28 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasOne(models.Profile)
-      User.hasMany(models.Trip)
+      User.hasOne(models.Profile);
+      User.hasMany(models.Trip);
       // define association here
     }
   }
-  User.init({
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
-    role: DataTypes.STRING,
-    ProfileId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
+  User.init(
+    {
+      username: DataTypes.STRING,
+      password: DataTypes.STRING,
+      role: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: "User",
+      hooks: {
+        beforeCreate: (user) => {
+          if (user.password) {
+            user.password = hashing(user.password);
+          }
+        },
+      },
+    }
+  );
   return User;
 };

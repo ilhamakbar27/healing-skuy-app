@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <nav class="bg-[#3887BE] flex justify-between items-center h-[80px]">
+      <div class="w-[1240px] mx-20">
+        <div
+          class="flex font-semibold items-center text-white text-lg gap-1 justify-between">
+          <div class="flex w-[1000px] justify-between">
+            <p class="text-4xl font-bold text-white">
+              <img src="" alt="" /> HealingSkuy
+            </p>
+            <p class="flex text-lg tracking-wider justify-center items-center">
+              Hi Welcome <%=username %>
+            </p>
+          </div>
+          <a href="/logout">
+            <p class="cursor-pointer text-xl hover:text-black">Logout</p>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div
+      class="container mx-auto my-10 py-24 rounded-lg text-center"
+      style="
+        background-image: url('https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+        background-size: cover;
+      ">
+      <div class="flex flex-col gap-3">
+        <h3 class="text-5xl text-white font-semibold">
+          Hi <%=username.split('2')[0]%> Unleash the Healing
+        </h3>
+        <h3 class="text-5xl text-white font-semibold">
+          Travel Experience! with us
+        </h3>
+      </div>
+      <p class="mt-8 text-xl text-white font-light">
+        Quis lectus nulla at volutpat diam ut. Enim lobortis scelerisque
+        fermentum dui faucibus in.
+      </p>
+      <p class="mt-8">
+        <a href="/trips">
+          <button
+            type="button"
+            class="text-white mt-3 text-xl bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-7 py-4 text-center me-2 mb-2">
+            Get started
+          </button>
+        </a>
+      </p>
+    </div>
+
+    <div
+      class="mt-10 max-w-[1300px] h-full mx-auto p-2 flex items-center flex-col gap-4">
+      <div class="w-full">
+        <h2 class="text-center text-3xl font-semibold">
+          Popular Trip Packages
+        </h2>
+        <p class="text-center text-xl font-medium text-gray-400">
+          The most popular tour packages
+        </p>
+      </div>
+
+      <div
+        class="cards-warpper flex items-center justify-center flex-wrap w-full mt-6 gap-5">
+        <div
+          class="card h-[400px] w-[300px] relative border rounded-2xl overflow-hidden">
+          <img
+            src="https://i.pinimg.com/564x/dc/64/f7/dc64f767ec651f2239ea9101cda2bb3f.jpg"
+            alt="raja ampat"
+            class="relative w-full object-cover hover:scale-105 transition-all ease-in-out delay-20 cursor-pointer" />
+          <div
+            class="details absolute bottom-0 p-3 text-white left-0 bg-gradient-to-t from-slate-900 to-transparent w-full">
+            <h3 class="text-xl font-medium">Raja ampat</h3>
+            <p class="text-sm">3 days 2 night</p>
+          </div>
+        </div>
+
+        <div
+          class="card h-[400px] w-[300px] relative border rounded-2xl overflow-hidden">
+          <img
+            src="https://i.pinimg.com/564x/75/c3/1a/75c31a4523af84327c7fc9748ce60638.jpg "
+            alt="bali"
+            class="relative w-full object-cover hover:scale-105 transition-all ease-in-out delay-20 cursor-pointer" />
+          <div
+            class="details absolute bottom-0 p-3 text-white left-0 bg-gradient-to-t from-slate-900 to-transparent w-full">
+            <h3 class="text-xl font-medium">Bali</h3>
+            <p class="text-sm">4 days 2 night</p>
+          </div>
+        </div>
+
+        <div
+          class="card h-[400px] w-[300px] relative border rounded-2xl overflow-hidden">
+          <img
+            src="https://i.pinimg.com/564x/dc/64/f7/dc64f767ec651f2239ea9101cda2bb3f.jpg"
+            alt="raja ampat"
+            class="relative w-full object-cover hover:scale-105 transition-all ease-in-out delay-20 cursor-pointer" />
+          <div
+            class="details absolute bottom-0 p-3 text-white left-0 bg-gradient-to-t from-slate-900 to-transparent w-full">
+            <h3 class="text-xl font-medium">Raja ampat</h3>
+            <p class="text-sm">3 days 2 night</p>
+          </div>
+        </div>
+      </div>
+      <a href="/trips">
+        <button
+          class="text-white mt-3 text-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-2xl text-sm px-6 py-3 text-center me-2 mb-2">
+          Explore more
+        </button>
+      </a>
+    </div>
+
+    <footer class="bg-white rounded-lg shadow m-4">
+      <div
+        class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+        <span class="text-sm text-gray-500 sm:text-center"
+          >© 2023 <a href="/home" class="hover:underline">HealingSkuy™</a>. All
+          Rights Reserved.
+        </span>
+        <ul
+          class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+          <li>
+            <a href="#" class="hover:underline me-4 md:me-6">About</a>
+          </li>
+          <li>
+            <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
+          </li>
+          <li>
+            <a href="#" class="hover:underline">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+  </body>
+</html>
