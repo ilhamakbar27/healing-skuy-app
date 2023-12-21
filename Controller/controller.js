@@ -116,7 +116,11 @@ class Controller {
   }
   static async showRegister(req, res) {
     try {
-      res.render("register");
+        const {errors} =req.query
+        let splittedErrors = errors?.split(",");
+        
+        // console.log(splittedErrors)
+      res.render("register", {splittedErrors});
     } catch (error) {
       res.send(error);
     }
@@ -126,6 +130,8 @@ class Controller {
     try {
       const { username, password, name, gender, age } = req.body;
       //   console.log(req.body);
+
+
       let newUser = await User.create({ username, password });
       await Profile.create({ name, gender, age, UserId: newUser.id });
 
@@ -136,7 +142,7 @@ class Controller {
         let inputErrors = error.errors.map((el) => {
           return el.message;
         });
-        res.send(inputErrors);
+        res.redirect(`/register?errors=${inputErrors}`);
         // res.send(error.
       } else {
         res.send(error);
