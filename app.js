@@ -9,7 +9,7 @@ const { rateLimit } = require('express-rate-limit');
 
 const limiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minutes
-	limit: 10, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+	limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
     message: "Too many requests from this IP, please try again for 1 minutes.",
 	standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
@@ -30,7 +30,6 @@ app.use(limiter)
 
 
 
-
 function isAuthenticated(req, res, next) {
     if (req.session.user) {
         //jika user benar mengisi saat login maka akan diarahkan ke next page(home)
@@ -42,7 +41,7 @@ function isAuthenticated(req, res, next) {
 
 
 function isAdmin(req, res, next) {
-    if (req.session.user.role === 'admin') {
+    if (req.session.user?.role === 'admin') {
       next();
     } else {
       res.redirect("/home"); // User tidak benar saat login, redirect to the login page
@@ -56,11 +55,13 @@ app.post("/login",limiter, Controller.handleLogin);
 app.get("/home",isAuthenticated ,Controller.showHome );
 app.get("/logout", Controller.logout);
 app.get("/register", Controller.showRegister)
-app.post("/register",Controller.handleRegister )
+app.post("/register",limiter,Controller.handleRegister )
 app.get("/trips",isAuthenticated, Controller.showTrips)
-app.get("/admin",isAdmin, Controller.showAdmin)
+app.get("/admin",isAdmin ,Controller.showAdmin)
+app.get("/admin/manage",isAdmin, Controller.managePage)
 app.get("/profile/:id", Controller.showProfile)
 app.post("/profile/:id", Controller.handleProfile)
+app.get('/admin/manage/:id/delete', Controller.handleDelete)
 
 
 app.listen(port, () => {

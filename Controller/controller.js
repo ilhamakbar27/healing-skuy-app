@@ -46,11 +46,15 @@ class Controller {
         role: user.role,
       };
 
-      if (req.session.user.role === "admin") {
-        return res.redirect("/admin");
+      if (!req.session.user) {
+        let errorMessage = "you have to login first!";
+        res.redirect(`/login?errors=${errorMessage}`);
+      } else if (req.session.user.role === "admin") {
+        res.redirect("/admin");
+      } else {
+        res.redirect("/home");
       }
       //   console.log(req.session.user);
-      res.redirect("/home");
       //   res.redirect()
     } catch (error) {
       console.log(error);
@@ -90,6 +94,22 @@ class Controller {
       });
       // console.log(profiles);
       res.render("admin", { username, profiles, id });
+    } catch (error) {
+      res.send(error);
+    }
+  }
+
+  static async managePage(req, res) {
+    try {
+      const { username, id } = req.session.user;
+    //   const {idTrip} =req.params
+      const profiles = await Profile.findOne({
+        where: { UserId: id },
+      });
+      const trip = await Trip.findAll({
+        include: [Destination],
+      });
+      res.render("manage", { username, id, profiles, trip });
     } catch (error) {
       res.send(error);
     }
@@ -184,6 +204,20 @@ class Controller {
     } catch (error) {
       console.log(error);
       res.send(error);
+    }
+  }
+
+  static async handleDelete(req,res) {
+    try {
+        const {id} = req.params
+        await Trip.destroy({
+            where : {id}
+        })
+        
+        res.redirect('/admin/manage')
+    } catch (error) {
+        console.log(error);
+        res.send(error);
     }
   }
 }
