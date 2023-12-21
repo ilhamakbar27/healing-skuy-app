@@ -155,7 +155,7 @@ class Controller {
       option.include = Destination;
 
       if (search) {
-        option.where = { name: { [Op.iLike]: `%${search}%` } };
+        option.where = { description: { [Op.iLike]: `%${search}%` } };
       }
 
       option.order = [["name", "desc"]];
@@ -213,7 +213,7 @@ class Controller {
         await Trip.destroy({
             where : {id}
         })
-        
+
         res.redirect('/admin/manage')
     } catch (error) {
         console.log(error);

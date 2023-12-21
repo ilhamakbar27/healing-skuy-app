@@ -10,7 +10,7 @@ const { rateLimit } = require('express-rate-limit');
 const limiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minutes
 	limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
-    message: "Too many requests from this IP, please try again for 1 minutes.",
+    message: "<h1 style='text-align: center; font-size: 50px; display: flex; justify-content: center; align-items: center; height: 100vh;'> Nginx ... <br/>Too many requests from this <br/> IP,  please try again for 1 minute.</h1>",
 	standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
 	// store: ... , // Use an external store for consistency across multiple server instances.

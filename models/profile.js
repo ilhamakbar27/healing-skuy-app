@@ -12,20 +12,63 @@ module.exports = (sequelize, DataTypes) => {
       Profile.belongsTo(models.User);
       // define association here
     }
-    
+
     get firstName() {
      return this.name.split(' ')[0]
     }
 
+    
   }
   Profile.init(
     {
-      name: DataTypes.STRING,
-      gender: DataTypes.STRING,
-      age: DataTypes.INTEGER,
+      name: {
+        type: DataTypes.STRING,
+        allowNull:false,
+        validate: {
+          notNull: {
+            msg: 'name cant be null'
+          },
+          notEmpty:{
+            msg: 'name cant be empty'
+          }
+        }
+      },
+      gender: {
+        type: DataTypes.STRING,
+        allowNull:false,
+        validate: {
+          notNull: {
+            msg: 'gender cant be null'
+          },
+          notEmpty:{
+            msg: 'gender cant be empty'
+          }
+        }
+      },
+      age: {
+        type: DataTypes.INTEGER,
+        allowNull:false,
+        validate: {
+          notNull: {
+            msg: 'age cant be null'
+          },
+          notEmpty:{
+            msg: 'age cant be empty'
+          }
+        }
+      },
       profilePicture: {
         type :DataTypes.STRING,
-        defaultValue:"https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
+        defaultValue:"https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg",
+        allowNull:false,
+        validate: {
+          notNull: {
+            msg: 'profile picture cant be null'
+          },
+          notEmpty:{
+            msg: 'profile picture cant be empty'
+          }
+        }
       },
       UserId: DataTypes.INTEGER,
     },
