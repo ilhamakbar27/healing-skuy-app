@@ -8,7 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <nav class="bg-[#3887BE] flex justify-between items-center h-[80px]">
+
+    <%- include ('_nav.ejs') %>
+    <!-- <nav class="bg-[#3887BE] flex justify-between items-center h-[80px]">
       <div class="w-[1240px] mx-20">
         <div
           class="flex font-semibold items-center text-white text-lg gap-1 justify-between">
@@ -20,12 +22,15 @@
               Hi Welcome <%=username %>
             </p>
           </div>
+          <a href="/profile/<%=id%>">
+            <p class="cursor-pointer text-lg hover:text-black">Profile</p>
+          </a>
           <a href="/logout">
-            <p class="cursor-pointer text-xl hover:text-black">Logout</p>
+            <p class="cursor-pointer text-lg hover:text-black">Logout</p>
           </a>
         </div>
       </div>
-    </nav>
+    </nav> -->
 
     <div
       class="container mx-auto my-10 py-24 rounded-lg text-center"

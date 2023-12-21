@@ -3,13 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.addColumn('Trips', 'UserId', {
-      type: Sequelize.INTEGER,
-      references: {
-        model: "Users",
-        key: "id"
-      }
-    })
+    await queryInterface.renameColumn('Trips', 'tour_title', 'tour_name');
     /**
      * Add altering commands here.
      *
@@ -19,7 +13,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.removeColumn('Trips', 'TripId' , {})
+    return queryInterface.renameColumn('tableName', 'tour_name', 'tour_title');
     /**
      * Add reverting commands here.
      *

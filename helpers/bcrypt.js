@@ -5,4 +5,6 @@ function hashing(password) {
   return hashSync(password, salt);
 }
 
+
+
 module.exports = hashing;

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <%- include ('_nav.ejs') %>
+    <div class="flex items-center justify-center mx-auto p-12">
+        <div class="flex flex-col gap-3">
+            <img class="object-cover h-auto" src="https://i.pinimg.com/564x/6e/37/ce/6e37ce2b1775ac9b05e4216f2f366e7d.jpg" alt="">
+            <!-- <h1 class="text-transparent bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 bg-clip-text text-5xl ">Create Profile here !</h1> -->
+
+        </div>
+        
+        <!-- Author: FormBold Team -->
+
+        <!-- Learn More: https://formbold.com -->
+        <div class="mx-auto w-full max-w-[550px] bg-white">
+                        <h1 class="text-transparent font-semibold mb-10  bg-[#3887BE] bg-clip-text text-5xl ">Create Profile here !</h1>
+         <form action="/profile/:id" method="post">
+                <div class="mb-5">
+                    <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+                        Full Name
+                    </label>
+                    <input type="text" name="name" id="name" placeholder="Full Name"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>      
+                <div class="mb-5">
+                    <label for="message" class="mb-3 block text-base font-medium text-[#07074D]">
+                      Gender
+                    </label>
+                    <input type="text" name="name" id="name" placeholder="Full Name"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+                <div class="mb-5">
+                    <label for="message" class="mb-3 block text-base font-medium text-[#07074D]">
+                      Age
+                    </label>
+                    <input type="text" name="name" id="name" placeholder="Full Name"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+                <div class="mb-5">
+                    <label for="profilePicture" class="mb-3 block text-base font-medium text-[#07074D]">
+                      Profile Picture
+                    </label>
+                    <input type="text" name="name" id="name" placeholder="Full Name"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+                <div>
+                    <button
+                        class="hover:shadow-form rounded-md bg-[#3887BE] py-3 px-8 text-base font-semibold text-white outline-none">
+                        Submit
+                    </button>
+                </div>
+            </form>
+
+        
+        </div>
+        
+    </div>
+</body>
+</html>

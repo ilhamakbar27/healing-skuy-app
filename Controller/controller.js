@@ -1,14 +1,13 @@
 // const {User} = require("../models")
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
-const { User } = require("../models");
+const { User, Trip } = require("../models");
 
 class Controller {
   static async showLogin(req, res) {
     try {
-
-
-      res.render("login");
+      const { errors } = req.query;
+      res.render("login", { errors });
     } catch (error) {
       res.send(error);
     }
@@ -20,22 +19,24 @@ class Controller {
         where: { username: username },
       });
 
+      let inputErrors = "username or password not correct!";
+
       if (!user) {
-        return res.redirect("/login");
+        return res.redirect(`/login?errors=${inputErrors}`);
       }
 
       const findUser = await bcrypt.compare(password, user.password);
-
       if (!findUser) {
-        return res.redirect("/login");
+        return res.redirect(`/login?errors=${inputErrors}`);
       }
 
       req.session.user = {
         id: user.id,
         username: user.username,
-        password: user.password,
+        role: user.role,
       };
 
+      console.log(req.session.user);
       res.redirect("/home");
       //   res.redirect()
     } catch (error) {
@@ -44,20 +45,19 @@ class Controller {
     }
   }
 
-  static async logout(req,res) {
+  static async logout(req, res) {
     try {
-        await req.session.destroy()
-        res.redirect("/login")
+      await req.session.destroy();
+      res.redirect("/login");
     } catch (error) {
-        res.send(error);
+      res.send(error);
     }
   }
 
   static async showHome(req, res) {
     try {
-    const {username} = req.session.user
-        // console.log(req.session.user);
-      res.render("home" , {username});
+      const { username, id } = req.session.user;
+      res.render("home", { username, id });
     } catch (error) {
       res.send(error);
     }
@@ -71,11 +71,35 @@ class Controller {
     }
   }
 
+  static async handleRegister(req, res) {
+    try {
+      const { username, password } = req.body;
+      await User.create({ username, password });
+      res.redirect("/login");
+    } catch (error) {
+      res.send(error);
+    }
+  }
+
   static async showTrips(req, res) {
     try {
-    const {username} = req.session.user
-        // console.log(req.session.user);
-      res.render("trips" , {username});
+      const trip = await Trip.findAll();
+      const { username, id } = req.session.user;
+
+      //   console.log(trip);
+      // console.log(req.session.user);
+      res.render("trips", { username, id, trip });
+    } catch (error) {
+      res.send(error);
+    }
+  }
+
+  static async showProfile(req, res) {
+    try {
+      const { username, id } = req.session.user;
+      // //  const {id} = req.session.user
+      //     console.log(req.session.user);
+      res.render("profile", { username, id });
     } catch (error) {
       res.send(error);
     }

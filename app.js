@@ -12,13 +12,26 @@ app.use(session({
     saveUninitialized: true
 }))
 
+
+function isAuthenticated(req, res, next) {
+    if (req.session.user) {
+        //jika user benar mengisi saat login maka akan diarahkan ke next page(home)
+      next();
+    } else {
+      res.redirect("/login"); // User tidak benar saat login, redirect to the login page
+    }
+  }
+
 app.get("/", Controller.showLogin);
 app.get("/login", Controller.showLogin);
 app.post("/login", Controller.handleLogin);
-app.get("/home", Controller.showHome);
+app.get("/home",isAuthenticated ,Controller.showHome );
 app.get("/logout", Controller.logout);
 app.get("/register", Controller.showRegister)
-app.get("/trips", Controller.showTrips)
+app.post("/register",Controller.handleRegister )
+app.get("/trips",isAuthenticated, Controller.showTrips)
+app.get("/profile/:id", Controller.showProfile)
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
