@@ -3,6 +3,21 @@ const Controller = require("./controller/controller");
 const app = express();
 const port = 3000;
 const session = require("express-session");
+const { rateLimit } = require('express-rate-limit');
+
+
+
+const limiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minutes
+	limit: 10, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+    message: "Too many requests from this IP, please try again for 1 minutes.",
+	standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+	// store: ... , // Use an external store for consistency across multiple server instances.
+})
+
+// Apply the rate limiting middleware to all requests.
+// app.use(limiter)
 
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
@@ -11,6 +26,9 @@ app.use(session({
     resave : false,
     saveUninitialized: true
 }))
+app.use(limiter)
+
+
 
 
 function isAuthenticated(req, res, next) {
@@ -30,11 +48,11 @@ function isAdmin(req, res, next) {
       res.redirect("/home"); // User tidak benar saat login, redirect to the login page
     }
   }
-  
+
 
 app.get("/", Controller.showLogin);
 app.get("/login", Controller.showLogin);
-app.post("/login", Controller.handleLogin);
+app.post("/login",limiter, Controller.handleLogin);
 app.get("/home",isAuthenticated ,Controller.showHome );
 app.get("/logout", Controller.logout);
 app.get("/register", Controller.showRegister)

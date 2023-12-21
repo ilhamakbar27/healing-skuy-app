@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       Profile.belongsTo(models.User);
       // define association here
     }
+    
+    get firstName() {
+     return this.name.split(' ')[0]
+    }
+
   }
   Profile.init(
     {

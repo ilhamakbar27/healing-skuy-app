@@ -1,7 +1,14 @@
 // const {User} = require("../models")
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
-const { User, Trip ,Profile,Destination,TripDestination} = require("../models");
+const { Op } = require("sequelize");
+const {
+  User,
+  Trip,
+  Profile,
+  Destination,
+  TripDestination,
+} = require("../models");
 
 // const destination = require("../models/destination");
 class Controller {
@@ -32,18 +39,18 @@ class Controller {
       }
 
       console.log(req.session.user);
-    //   const {role} = req.session.user
+      //   const {role} = req.session.user
       req.session.user = {
         id: user.id,
         username: user.username,
         role: user.role,
       };
 
-      if (req.session.user.role ==='admin') {
-          return res.redirect('/admin')
-        }
-        //   console.log(req.session.user);
-        res.redirect("/home");
+      if (req.session.user.role === "admin") {
+        return res.redirect("/admin");
+      }
+      //   console.log(req.session.user);
+      res.redirect("/home");
       //   res.redirect()
     } catch (error) {
       console.log(error);
@@ -62,13 +69,13 @@ class Controller {
 
   static async showHome(req, res) {
     try {
-        const { username, id } = req.session.user;
+      const { username, id } = req.session.user;
 
-        const profiles = await Profile.findOne({
-            where : {UserId : id}
-        })
-        // console.log(profiles);
-      res.render("home", { username, profiles ,id});
+      const profiles = await Profile.findOne({
+        where: { UserId: id },
+      });
+      // console.log(profiles);
+      res.render("home", { username, profiles, id });
     } catch (error) {
       res.send(error);
     }
@@ -76,13 +83,13 @@ class Controller {
 
   static async showAdmin(req, res) {
     try {
-        const { username, id } = req.session.user;
+      const { username, id } = req.session.user;
 
-        const profiles = await Profile.findOne({
-            where : {UserId : id}
-        })
-        // console.log(profiles);
-      res.render("admin", { username, profiles,id});
+      const profiles = await Profile.findOne({
+        where: { UserId: id },
+      });
+      // console.log(profiles);
+      res.render("admin", { username, profiles, id });
     } catch (error) {
       res.send(error);
     }
@@ -98,7 +105,7 @@ class Controller {
   static async handleRegister(req, res) {
     try {
       const { username, password, name, gender, age } = req.body;
-    //   console.log(req.body);
+      //   console.log(req.body);
       let newUser = await User.create({ username, password });
       await Profile.create({ name, gender, age, UserId: newUser.id });
 
@@ -119,24 +126,31 @@ class Controller {
 
   static async showTrips(req, res) {
     try {
-        // const profiles = await Profile.findAll()
-        const { username, id } = req.session.user;
-      const trip = await Trip.findAll({
-        include : Destination
-      });
-       
-      
+      // const profiles = await Profile.findAll()
+      const { username, id } = req.session.user;
 
-    //   console.log(destination);
+      const { search } = req.query;
+
+      const option = {};
+      option.include = Destination;
+
+      if (search) {
+        option.where = { name: { [Op.iLike]: `%${search}%` } };
+      }
+
+      option.order = [["name", "desc"]];
+      const trip = await Trip.findAll(option);
+
+      //   console.log(destination);
 
       const profiles = await Profile.findOne({
-        where : {UserId : id}
-    })
+        where: { UserId: id },
+      });
       //   console.log(trip);
       // console.log(req.session.user);
-      res.render("trips", { username, id,profiles, trip });
+      res.render("trips", { username, id, profiles, trip });
     } catch (error) {
-        console.log(error);
+      console.log(error);
       res.send(error);
     }
   }
@@ -145,12 +159,8 @@ class Controller {
     try {
       const { username, id } = req.session.user;
       const profiles = await Profile.findOne({
-        where : {UserId : id}
-    })
-    console.log(profiles);
-    //   const profiles = await Profile.findAll()
-      // //  const {id} = req.session.user
-      //     console.log(req.session.user);
+        where: { UserId: id },
+      });
       res.render("profile", { username, id, profiles });
     } catch (error) {
       res.send(error);
@@ -159,18 +169,23 @@ class Controller {
 
   static async handleProfile(req, res) {
     try {
-    //   const { username, id } = req.session.user;
-        const {name,gender,age,profilePicture} =req.body
-        await Profile.update({name,gender,age,profilePicture})
-        console.log(req.body);
-        res.redirect('/home')
-    //   res.render("profile", { username, id, profiles });
+      const { id } = req.session.user;
+      const { name, gender, age, profilePicture } = req.body;
+
+      await Profile.update(
+        { name, gender, age, profilePicture },
+        {
+          where: { UserId: id },
+        }
+      );
+
+      res.redirect("/home");
+      //   res.render("profile", { username, id, profiles });
     } catch (error) {
+      console.log(error);
       res.send(error);
     }
   }
-
-  
 }
 
 module.exports = Controller;
