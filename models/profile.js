@@ -1,6 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
-const user = require("./user");
+// const user = require("./user");
 module.exports = (sequelize, DataTypes) => {
   class Profile extends Model {
     /**
@@ -18,12 +18,17 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       gender: DataTypes.STRING,
       age: DataTypes.INTEGER,
-      profilePicture: DataTypes.STRING,
+      profilePicture: {
+        type :DataTypes.STRING,
+        defaultValue:"https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
+      },
       UserId: DataTypes.INTEGER,
     },
     {
       sequelize,
       modelName: "Profile",
+   
+
     }
   );
   return Profile;

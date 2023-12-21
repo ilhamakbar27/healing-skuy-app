@@ -1,7 +1,7 @@
 // const {User} = require("../models")
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
-const { User, Trip } = require("../models");
+const { User, Trip ,Profile} = require("../models");
 
 class Controller {
   static async showLogin(req, res) {
@@ -30,14 +30,19 @@ class Controller {
         return res.redirect(`/login?errors=${inputErrors}`);
       }
 
+      console.log(req.session.user);
+    //   const {role} = req.session.user
       req.session.user = {
         id: user.id,
         username: user.username,
         role: user.role,
       };
 
-      console.log(req.session.user);
-      res.redirect("/home");
+      if (req.session.user.role ==='admin') {
+          return res.redirect('/admin')
+        }
+        //   console.log(req.session.user);
+        res.redirect("/home");
       //   res.redirect()
     } catch (error) {
       console.log(error);
@@ -56,13 +61,31 @@ class Controller {
 
   static async showHome(req, res) {
     try {
-      const { username, id } = req.session.user;
-      res.render("home", { username, id });
+        const { username, id } = req.session.user;
+
+        const profiles = await Profile.findOne({
+            where : {UserId : id}
+        })
+        console.log(profiles);
+      res.render("home", { username, profiles ,id});
     } catch (error) {
       res.send(error);
     }
   }
 
+  static async showAdmin(req, res) {
+    try {
+        const { username, id } = req.session.user;
+
+        const profiles = await Profile.findOne({
+            where : {UserId : id}
+        })
+        console.log(profiles);
+      res.render("admin", { username, profiles,id});
+    } catch (error) {
+      res.send(error);
+    }
+  }
   static async showRegister(req, res) {
     try {
       res.render("register");
@@ -73,22 +96,37 @@ class Controller {
 
   static async handleRegister(req, res) {
     try {
-      const { username, password } = req.body;
-      await User.create({ username, password });
+      const { username, password, name, gender, age } = req.body;
+      console.log(req.body);
+      let newUser = await User.create({ username, password });
+      await Profile.create({ name, gender, age, UserId: newUser.id });
+
       res.redirect("/login");
     } catch (error) {
-      res.send(error);
+      console.log(error);
+      if (error.name === "SequelizeValidationError") {
+        let inputErrors = error.errors.map((el) => {
+          return el.message;
+        });
+        res.send(inputErrors);
+        // res.send(error.
+      } else {
+        res.send(error);
+      }
     }
   }
 
   static async showTrips(req, res) {
     try {
+        // const profiles = await Profile.findAll()
       const trip = await Trip.findAll();
       const { username, id } = req.session.user;
-
+      const profiles = await Profile.findOne({
+        where : {UserId : id}
+    })
       //   console.log(trip);
       // console.log(req.session.user);
-      res.render("trips", { username, id, trip });
+      res.render("trips", { username, id,profiles, trip });
     } catch (error) {
       res.send(error);
     }
@@ -97,13 +135,30 @@ class Controller {
   static async showProfile(req, res) {
     try {
       const { username, id } = req.session.user;
+      const profiles = await Profile.findOne({
+        where : {UserId : id}
+    })
+    //   const profiles = await Profile.findAll()
       // //  const {id} = req.session.user
       //     console.log(req.session.user);
-      res.render("profile", { username, id });
+      res.render("profile", { username, id, profiles });
     } catch (error) {
       res.send(error);
     }
   }
+
+//   static async handleProfile(req, res) {
+//     try {
+//       const { username, id } = req.session.user;
+//      const {name,gender,age,profilePicture} =req.body
+
+//       res.render("profile", { username, id, profiles });
+//     } catch (error) {
+//       res.send(error);
+//     }
+//   }
+
+  
 }
 
 module.exports = Controller;

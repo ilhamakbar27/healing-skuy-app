@@ -11,7 +11,7 @@
     <div
       class="bg-gradient-to-r from-purple-400 to-indigo-500 min-h-screen flex flex-col">
       <div
-        class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+        class="container max-w-md mx-auto flex-1 flex flex-col items-center justify-center px-2">
         <form action="/register" method="post">
           <div
             class="bg-white px-6 py-8 rounded-lg shadow-lg text-black w-full">
@@ -19,11 +19,25 @@
               Sign up
             </h1>
             <input
+            type="text"
+            class="block border border-gray-300 w-full p-3 rounded mb-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            name="username"
+            placeholder="Username" />
+            <input
               type="text"
               class="block border border-gray-300 w-full p-3 rounded mb-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              name="username"
-              placeholder="Username" />
-
+              name="name"
+              placeholder="Fullname" />
+              <input
+              type="text"
+              class="block border border-gray-300 w-full p-3 rounded mb-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              name="gender"
+              placeholder="Gender" />
+              <input
+              type="text"
+              class="block border border-gray-300 w-full p-3 rounded mb-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              name="age"
+              placeholder="Age" />
             <input
               type="password"
               class="block border border-gray-300 w-full p-3 rounded mb-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"

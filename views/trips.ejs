@@ -25,13 +25,16 @@
           <!-- Replace the dynamic values with actual data -->
           <!-- Example card element -->
           <% trip.forEach(el => { %>
-            <div class="card shadow-md rounded-xl overflow-hidden w-full h-[450px] flex flex-col items-center">
+            <div class="card shadow-md rounded-xl overflow-hidden w-full h-[450px] flex flex-col items-center relative">
               <div class="flex-[2] w-full relative">
                 <img class="object-cover h-[260px] w-full" src="<%=el.image %>" alt="ok" />
               </div>
+              <div class="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full">
+                Indonesia 
+              </div>
               <div class="flex-[1] p-4 w-full flex flex-col gap-4 items-center justify-center bg-white">
                 <div class="w-full flex items-center justify-between">
-                  <h2 class="text-2xl font-semibold">  <%=el.name%></h2>
+                  <h2 class="text-2xl font-semibold"><%=el.name%></h2>
                   <div class="flex items-center gap-2 text-2xl font-medium">
                     <!-- <span>
                       <AiTwotoneStar size="28" color="#ffb329" />
@@ -43,8 +46,8 @@
                   <%= el.description %>
                 </div>
                 <div class="w-full flex items-center justify-between">
-                  <h2 class="text-3xl font-medium"> $<%= el.price %></h2>
-                  <button class="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br  p-3 px-6 rounded-3xl font-semibold cursor-pointer text-white">
+                  <h2 class="text-3xl font-medium">$<%= el.price %></h2>
+                  <button class="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br p-3 px-6 rounded-3xl font-semibold cursor-pointer text-white">
                     Book now
                   </button>
                 </div>

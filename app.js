@@ -22,6 +22,16 @@ function isAuthenticated(req, res, next) {
     }
   }
 
+
+function isAdmin(req, res, next) {
+    if (req.session.user.role === 'admin') {
+      next();
+    } else {
+      res.redirect("/home"); // User tidak benar saat login, redirect to the login page
+    }
+  }
+  
+
 app.get("/", Controller.showLogin);
 app.get("/login", Controller.showLogin);
 app.post("/login", Controller.handleLogin);
@@ -30,6 +40,7 @@ app.get("/logout", Controller.logout);
 app.get("/register", Controller.showRegister)
 app.post("/register",Controller.handleRegister )
 app.get("/trips",isAuthenticated, Controller.showTrips)
+app.get("/admin",isAdmin, Controller.showAdmin)
 app.get("/profile/:id", Controller.showProfile)
 
 

@@ -7,11 +7,11 @@
           <img src="" alt="" /> HealingSkuy
         </p>
         <p class="flex text-lg tracking-wider justify-center items-center">
-          Hi Welcome <%=username %>
+       <img class="object-cover mr-5 rounded-full h-[40px] w-[40px]" src="<%= profiles.profilePicture %>" alt="">  Welcome <%= profiles.name %>
         </p>
       </div>
       <div class="flex gap-8">
-        <a href="/home">
+        <a href="/admin">
           <p class="cursor-pointer text-lg hover:text-black">Home</p>
         </a>
         <a href="/profile/<%=id%>">
