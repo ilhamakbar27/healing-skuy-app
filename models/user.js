@@ -27,6 +27,12 @@ module.exports = (sequelize, DataTypes) => {
           },
           notEmpty:{
             msg: 'username cant be empty'
+          },
+          async unqiue (value) {
+            let data = await User.findOne({where : {username : value}})
+            if (data) {
+              throw new Error ('Username already exist!')
+            }
           }
         }
       },
