@@ -137,7 +137,7 @@ class Controller {
 
       res.redirect("/login");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       if (error.name === "SequelizeValidationError") {
         let inputErrors = error.errors.map((el) => {
           return el.message;
@@ -183,11 +183,14 @@ class Controller {
 
   static async showProfile(req, res) {
     try {
+      const {errors} =req.query
+
+      let splittedErrors = errors?.split(",");
       const { username, id } = req.session.user;
       const profiles = await Profile.findOne({
         where: { UserId: id },
       });
-      res.render("profile", { username, id, profiles });
+      res.render("profile", { username, id, profiles,splittedErrors });
     } catch (error) {
       res.send(error);
     }
@@ -208,8 +211,16 @@ class Controller {
       res.redirect("/home");
       //   res.render("profile", { username, id, profiles });
     } catch (error) {
-      console.log(error);
-      res.send(error);
+      const {id} =req.params
+      if (error.name === "SequelizeValidationError") {
+        let inputErrors = error.errors.map((el) => {
+          return el.message;
+        });
+        res.redirect(`/profile/${id}/?errors=${inputErrors}`);
+        // res.send(error.
+      } else {
+        res.send(error);
+      }
     }
   }
 
