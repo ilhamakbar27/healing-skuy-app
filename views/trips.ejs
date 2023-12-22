@@ -16,7 +16,7 @@
         <div>
           <h2 class="text-4xl font-semibold">Our trips destination</h2>
           <p class="mt-3 text-xl font-medium text-gray-400">
-            Best travel destinations from around the world  <br/>
+            Best travel destinations from around the world <br />
           </p>
         </div>
         <div class="justify-center items center mt-5 flex">
@@ -24,7 +24,7 @@
             class="justify-center items center flex"
             action="/trips"
             method="get">
-            <input  
+            <input
               type="search"
               name="search"
               placeholder="Search by title..."
@@ -37,6 +37,16 @@
           </form>
         </div>
       </div>
+    <% if (success) { %>
+     
+      <div class="bg-green-100 w-full  border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Success!</strong>
+        <span class="block sm:inline"> <%= success %> </span>
+        <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+
+        </span>
+      </div>
+    <% } %>
 
       <div class="cards-wrapper grid grid-cols-3 gap-6 w-full">
         <!-- Loop through the 'data' array and generate card elements -->
@@ -67,7 +77,6 @@
                 <!-- <span>
                       <AiTwotoneStar size="28" color="#ffb329" />
                     </span> -->
-                
               </div>
             </div>
             <div class="title text-xl font-medium text-gray-400">
@@ -75,10 +84,12 @@
             </div>
             <div class="w-full flex items-center justify-between">
               <h2 class="text-3xl font-medium">$<%= el.price %></h2>
-              <button
-                class="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br p-3 px-6 rounded-3xl font-semibold cursor-pointer text-white">
-                Book now
-              </button>
+              <a href="/trips/buy">
+                <button
+                  class="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br p-3 px-6 rounded-3xl font-semibold cursor-pointer text-white">
+                  Book now
+                </button>
+              </a>
             </div>
           </div>
         </div>

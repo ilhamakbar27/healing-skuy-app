@@ -152,6 +152,7 @@ class Controller {
 
   static async showTrips(req, res) {
     try {
+      const {success} =req.query
       // const profiles = await Profile.findAll()
       const { username, id } = req.session.user;
 
@@ -174,7 +175,7 @@ class Controller {
       });
       //   console.log(trip);
       // console.log(req.session.user);
-      res.render("trips", { username, id, profiles, trip });
+      res.render("trips", { username, id, profiles,success, trip });
     } catch (error) {
       console.log(error);
       res.send(error);
@@ -232,6 +233,16 @@ class Controller {
         })
 
         res.redirect('/admin/manage')
+    } catch (error) {
+        console.log(error);
+        res.send(error);
+    }
+  }
+
+  static async buyTrips(req,res) {
+    try {
+      let success = ' You have booked a trip'
+        res.redirect(`/trips?success=${success}`)
     } catch (error) {
         console.log(error);
         res.send(error);

@@ -9,11 +9,11 @@ const { rateLimit } = require('express-rate-limit');
 
 const limiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minutes
-	limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
-    message: "<h1 style='text-align: center; font-size: 50px; display: flex; justify-content: center; align-items: center; height: 100vh;'> Nginx ... <br/>Too many requests from this <br/> IP,  please try again for 1 minute.</h1>",
-	standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+	limit: 40, // Limit each IP to 1 requests per `window` 
+    message: "<h1 style='text-align: center; font-size: 50px; display: flex; justify-content: center; align-items: center; height: 100vh;'> Nginx ... <br/>Too many requests from this <br/> IP,  please try again later.</h1>",
+	standardHeaders: 'draft-7', // dra
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
-	// store: ... , // Use an external store for consistency across multiple server instances.
+	
 })
 
 // Apply the rate limiting middleware to all requests.
@@ -62,7 +62,7 @@ app.get("/admin/manage",isAdmin, Controller.managePage)
 app.get("/profile/:id", Controller.showProfile)
 app.post("/profile/:id", Controller.handleProfile)
 app.get('/admin/manage/:id/delete', Controller.handleDelete)
-
+app.get('/trips/buy',Controller.buyTrips)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
