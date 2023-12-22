@@ -7,7 +7,6 @@ const {
   Trip,
   Profile,
   Destination,
-  TripDestination,
 } = require("../models");
 
 // const destination = require("../models/destination");

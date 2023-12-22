@@ -23,13 +23,15 @@
             <h1 class="text-transparent font-semibold mb-10  bg-[#3887BE] bg-clip-text text-5xl ">Edit your profile here !</h1>
             <form action="/profile/<%=id%>" method="post">
                 <div class="mb-5">
-                    <div class="flex flex-col justify-start ">
-
+                    <div class="bg-red-100 w-full   border border-red-400 text-red-700 px-2 py-2 rounded relative" role="alert">
                         <% splittedErrors?.forEach(el => { %>
-                            <p class="text-center font-semibold pb-1 text-red-600"> <%= el %> </p>
-                            <% }) %>
+                        <strong class="font-bold">Error!</strong>
+                        <span class="block sm:inline"> <%= el  %> <br> </span>
+                        <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                        </span>
+                        <% }) %>
                     </div>
-                    <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+                    <label for="name" class="mb-3 mt-3 block text-base font-medium text-[#07074D]">
                         Full Name
                     </label>
                     <input type="text" name="name" placeholder="Full Name"
